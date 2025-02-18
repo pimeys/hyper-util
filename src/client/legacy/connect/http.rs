@@ -807,6 +807,15 @@ fn connect(
         use std::os::unix::io::{FromRawFd, IntoRawFd};
         TcpSocket::from_raw_fd(socket.into_raw_fd())
     };
+    #[cfg(all(target_os = "wasi", target_env = "p2"))]
+    let socket = unsafe {
+        // Safety: `from_raw_fd` is only safe to call if ownership of the raw
+        // file descriptor is transferred. Since we call `into_raw_fd` on the
+        // socket2 socket, it gives up ownership of the fd and will not close
+        // it, so this is safe.
+        use std::os::wasi::io::{FromRawFd, IntoRawFd};
+        TcpSocket::from_raw_fd(socket.into_raw_fd())
+    };
     #[cfg(windows)]
     let socket = unsafe {
         // Safety: `from_raw_socket` is only safe to call if ownership of the raw
@@ -836,6 +845,7 @@ fn connect(
     }
 
     let connect = socket.connect(*addr);
+
     Ok(async move {
         match connect_timeout {
             Some(dur) => match tokio::time::timeout(dur, connect).await {

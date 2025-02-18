@@ -25,16 +25,16 @@ http-body = "1.0.0"
 bytes = "1.7.1"
 pin-project-lite = "0.2.4"
 futures-channel = { version = "0.3", optional = true }
-socket2 = { version = "0.5", optional = true, features = ["all"] }
+socket2 = { git = "https://github.com/pimeys/socket2", branch = "wasip2", optional = true, features = ["all"] }
 tracing = { version = "0.1", default-features = false, features = ["std"], optional = true }
-tokio = { version = "1", optional = true, default-features = false  }
+tokio = { git = "https://github.com/pimeys/tokio", branch = "wasip2", optional = true, default-features = false  }
 tower-service = { version = "0.3", optional = true }
 
 [dev-dependencies]
 hyper = { version = "1.4.0", features = ["full"] }
 bytes = "1"
 http-body-util = "0.1.0"
-tokio = { version = "1", features = ["macros", "test-util", "signal"] }
+tokio = { git = "https://github.com/pimeys/tokio", branch = "wasip2", features = ["macros", "test-util", "signal"] }
 tokio-test = "0.4"
 pretty_env_logger = "0.5"
 

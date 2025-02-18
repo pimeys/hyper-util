@@ -1,5 +1,6 @@
 #![deny(missing_docs)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg, doc_cfg))]
+#![cfg_attr(all(target_os = "wasi", target_env = "p2"), feature(wasip2))]
 
 //! Utilities for working with hyper.
 //!
